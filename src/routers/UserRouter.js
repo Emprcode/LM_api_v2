@@ -1,6 +1,7 @@
 import express from "express";
 import { createUser, getUserByEmail } from "../model/user/UserModel.js";
-import { comparePassword, hashPassword } from "../middlewares/bcryptHelper.js";
+import { comparePassword, hashPassword } from "../utils/bcryptHelper.js";
+import { signAccessJWT, signRefreshJWT } from "../utils/jwt.js";
 
 const router = express.Router();
 
@@ -47,14 +48,19 @@ router.post("/login", async (req, res, next) => {
     const { email, password } = req.body;
 
     const user = await getUserByEmail(email);
+    console.log(req.body)
     if (user?._id) {
       const isPassMatch = comparePassword(password, user.password);
       if (isPassMatch) {
-        user.password = undefined;
+     const tokens ={
+      accessJWT : await signAccessJWT({email}),
+      refreshJWT : await signRefreshJWT({email})
+     }
+     console.log(tokens)
         return res.json({
           status: "success",
           message: "Login successful",
-          user,
+          tokens,
         });
       }
     }
