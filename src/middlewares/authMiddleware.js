@@ -20,7 +20,7 @@ export const userAuth = async (req, res, next) => {
       if (_id) {
         //check if the user exist from userModel
 
-        const user = await getUserByEmail({ email });
+        const user = await getUserByEmail(email);
         if (user?._id && user?.status === "active") {
           user.password = undefined;
           req.userInfo = user;

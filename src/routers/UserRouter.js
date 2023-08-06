@@ -2,6 +2,7 @@ import express from "express";
 import { createUser, getUserByEmail } from "../model/user/UserModel.js";
 import { comparePassword, hashPassword } from "../utils/bcryptHelper.js";
 import { signAccessJWT, signRefreshJWT } from "../utils/jwt.js";
+import { userAuth } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -72,5 +73,20 @@ router.post("/login", async (req, res, next) => {
     next(error);
   }
 });
+
+
+//get userInfo after authorization for frontend use
+
+router.get("/", userAuth, (req, res, next) => {
+  try {
+    res.json({
+      status:"success",
+      user : req.userInfo
+    })
+  } catch (error) {
+    next(error)
+    
+  }
+})
 
 export default router;
