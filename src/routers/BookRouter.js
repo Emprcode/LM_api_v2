@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addBook,
+  deleteBook,
   getAllBooks,
   getBookByIsbn,
   getBorrowedBooks,
@@ -46,6 +47,23 @@ router.get("/", async (req, res, next) => {
       });
     }
     return;
+  } catch (error) {
+    next(error);
+  }
+});
+// delete books
+router.delete("/", async (req, res, next) => {
+  try {
+  const {bookId} = req.body
+    const result = await deleteBook(bookId);
+    result?._id ? res.json({
+      status:"success",
+      message:"Book deleted successfully"
+    }) : res.json({
+      status:"error",
+      message:"Unable to delete book, please try again later"
+    })
+  
   } catch (error) {
     next(error);
   }
