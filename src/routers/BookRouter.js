@@ -41,6 +41,7 @@ router.get("/", async (req, res, next) => {
     const books = await getAllBooks();
     if (books) {
       return res.status(200).json({
+        status: "success",
         books,
       });
     }

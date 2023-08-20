@@ -21,7 +21,7 @@ app.use(morgan("dev"));
 connectDb();
 
 app.use("/api/v1/user", UserRouter);
-app.use("/api/v1/book", userAuth, BookRouter);
+app.use("/api/v1/book", BookRouter);
 
 //uncaught error handler
 app.use("*", (req, res, next) => {
