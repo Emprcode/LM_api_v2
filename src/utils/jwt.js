@@ -23,7 +23,8 @@ export const signRefreshJWT = async (payload) => {
 
 export const verifyAccessJWT = (token) => {
   try {
-    return jwt.verify(token, process.env.ACCESS_JWT);
+    // return jwt.verify(token, process.env.ACCESS_JWT);
+    return jwt.verify(token, "dsfdsfertdfg5645");
   } catch (error) {
     return error.message;
   }

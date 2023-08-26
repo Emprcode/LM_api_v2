@@ -16,7 +16,7 @@ export const userAuth = async (req, res, next) => {
 
       // const session = await getSession({token: authorization})
       const { _id } = await getSession({ token: authorization });
-
+console.log(_id)
       if (_id) {
         //check if the user exist from userModel
 
