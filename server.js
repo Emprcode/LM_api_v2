@@ -23,6 +23,13 @@ connectDb();
 app.use("/api/v1/user", UserRouter);
 app.use("/api/v1/book", BookRouter);
 
+app.use("*", (req, res)=> {
+  res.json({
+    status:"success",
+    message:"Server is running"
+  })
+})
+
 //uncaught error handler
 app.use("*", (req, res, next) => {
   const error = {
